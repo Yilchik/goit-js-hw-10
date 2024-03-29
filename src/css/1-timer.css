@@ -1,6 +1,6 @@
 @import url('./reset.css');
 input {
-  width: 272px;
+  width: 280px;
   height: 40px;
   border-radius: 4px;
   background: #fff;
@@ -13,7 +13,14 @@ input {
   margin-right: 8px;
   margin-bottom: 32px;
 }
-
+input:hover,
+input:focus-visible {
+  border: 1px solid #4e75ff;
+  outline: 1px;
+  border-radius: 4px;
+  width: 280px;
+  height: 40px;
+}
 button {
   border-radius: 8px;
   border: none;
@@ -27,7 +34,9 @@ button {
   letter-spacing: 0.04em;
   color: #989898;
 }
-
+button:disabled {
+  background: #4e75ff;
+}
 .timer {
   display: flex;
   flex-wrap: wrap;
