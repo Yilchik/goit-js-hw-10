@@ -4,6 +4,7 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
 let userSelectedDate;
+let intervalID = null;
 
 const inputDate = document.querySelector('input[type="text"]');
 const btnStart = document.querySelector('button[data-start]');
@@ -11,6 +12,10 @@ const daysValue = document.querySelector('.value[data-days]');
 const hoursValue = document.querySelector('.value[data-hours]');
 const minutesValue = document.querySelector('.value[data-minutes]');
 const secondsValue = document.querySelector('.value[data-seconds]');
+
+function addLeadingZero(value) {
+  return String(value).padStart(2, '0');
+}
 
 const options = {
   enableTime: true,
@@ -23,76 +28,44 @@ const options = {
     console.log(selectedDates[0]);
 
     if (selectedDate.getTime() < currentDate.getTime()) {
-      window.alert('Please choose a date in the future');
+      iziToast.error({
+        title: 'Error',
+        message: 'Please choose a date in the future',
+        position: 'topRight',
+      });
       btnStart.disabled = true;
     } else {
-      btnStart.disabled = false;
       userSelectedDate = selectedDate;
+      btnStart.disabled = false;
     }
   },
 };
 
 flatpickr(inputDate, options);
 
-// function addLeadingZero(value) {
-//   return value < 10 ? '0' + value : value;
-// }
-
 btnStart.addEventListener('click', start);
 
 function start() {
-  const selectedDate = new Date(inputDate.value).getTime();
-  const currentDate = new Date().getTime();
-  const timeRemaining = selectedDate - currentDate;
-
-  if (timeRemaining <= 0) {
-    window.alert('Please choose a date in the future');
-    return;
-  }
+  const currentDate = Date.now();
+  const deltaDate = userSelectedDate.getTime() - currentDate;
 
   btnStart.disabled = true;
-  countdownInterval = setInterval(() => {
-    const { days, hours, minutes, seconds } = convertMs(timeRemaining);
+
+  intervalID = setInterval(() => {
+    const { days, hours, minutes, seconds } = convertMs(deltaDate);
 
     daysValue.textContent = addLeadingZero(days);
     hoursValue.textContent = addLeadingZero(hours);
     minutesValue.textContent = addLeadingZero(minutes);
     secondsValue.textContent = addLeadingZero(seconds);
 
-    timeRemaining -= 1000;
+    // deltaDate -= 1000;
 
-    if (timeRemaining < 0) {
-      clearInterval(countdownInterval);
-      iziToast.success({
-        title: 'Countdown Finished',
-        message: 'The countdown timer has ended',
-        position: 'topRight',
-      });
+    if (deltaDate < 0) {
+      clearInterval(intervalID);
     }
   }, 1000);
 }
-
-// let isActive = false;
-// let intervalId = null;
-
-// init();
-
-// function start() {
-//   if (isActive) {
-//     return;
-//   }
-
-//   isActive = true;
-//   const startTime = Date.now();
-
-//   intervalId = setInterval(() => {
-//     const currentTime = Date.now();
-//     const delatTime = currentTime - startTime;
-//     const time = getTime(delatTime);
-
-//     updateClockface(time);
-//   }, 1000);
-// }
 
 function convertMs(ms) {
   // Number of milliseconds per unit of time
