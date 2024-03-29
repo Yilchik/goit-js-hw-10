@@ -1,4 +1,5 @@
 @import url('./reset.css');
+
 input,
 input:disabled:hover {
   width: 280px;
@@ -6,7 +7,6 @@ input:disabled:hover {
   border-radius: 4px;
   background: #fff;
   border: 1px solid #808080;
-
   font-weight: 400;
   font-size: 16px;
   line-height: 1.5;
@@ -14,13 +14,17 @@ input:disabled:hover {
   margin-right: 8px;
   margin-bottom: 32px;
 }
-input:hover,
-input:focus-visible {
+
+input:hover {
+  border: 1px solid #000;
+}
+
+input:active {
   border: 1px solid #4e75ff;
-  outline: 1px;
-  border-radius: 4px;
-  width: 280px;
-  height: 40px;
+}
+
+input:disabled:hover {
+  cursor: not-allowed;
 }
 
 button {
@@ -29,17 +33,22 @@ button {
   padding: 8px 16px;
   width: 75px;
   height: auto;
-
   font-weight: 500;
   font-size: 16px;
   line-height: 1.5;
   letter-spacing: 0.04em;
-  color: #989898;
+  color: #fff;
   background: #4e75ff;
+}
+
+button:hover {
+  background: #6c8cff;
 }
 
 button:disabled {
   background: #cfcfcf;
+  color: #989898;
+  cursor: not-allowed;
 }
 
 .timer {
