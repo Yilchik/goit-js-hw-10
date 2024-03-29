@@ -13,6 +13,8 @@ const hoursValue = document.querySelector('.value[data-hours]');
 const minutesValue = document.querySelector('.value[data-minutes]');
 const secondsValue = document.querySelector('.value[data-seconds]');
 
+btnStart.disabled = true;
+
 function addLeadingZero(value) {
   return String(value).padStart(2, '0');
 }
@@ -28,15 +30,15 @@ const options = {
     console.log(selectedDates[0]);
 
     if (selectedDate.getTime() < currentDate.getTime()) {
+      btnStart.disabled = true;
       iziToast.error({
         title: 'Error',
         message: 'Please choose a date in the future',
         position: 'topRight',
       });
-      btnStart.disabled = true;
     } else {
-      userSelectedDate = selectedDate;
       btnStart.disabled = false;
+      userSelectedDate = selectedDate;
     }
   },
 };
@@ -46,20 +48,19 @@ flatpickr(inputDate, options);
 btnStart.addEventListener('click', start);
 
 function start() {
-  const currentDate = Date.now();
-  const deltaDate = userSelectedDate.getTime() - currentDate;
-
   btnStart.disabled = true;
+  inputDate.disabled = true;
 
   intervalID = setInterval(() => {
+    const currentDate = Date.now();
+    const deltaDate = userSelectedDate.getTime() - currentDate;
+
     const { days, hours, minutes, seconds } = convertMs(deltaDate);
 
     daysValue.textContent = addLeadingZero(days);
     hoursValue.textContent = addLeadingZero(hours);
     minutesValue.textContent = addLeadingZero(minutes);
     secondsValue.textContent = addLeadingZero(seconds);
-
-    // deltaDate -= 1000;
 
     if (deltaDate < 0) {
       clearInterval(intervalID);
