@@ -29,7 +29,7 @@ const options = {
     const currentDate = new Date();
     console.log(selectedDates[0]);
 
-    if (selectedDate.getTime() < currentDate.getTime()) {
+    if (selectedDate.getTime() <= currentDate.getTime()) {
       btnStart.disabled = true;
       iziToast.error({
         title: 'Error',
@@ -62,8 +62,12 @@ function start() {
     minutesValue.textContent = addLeadingZero(minutes);
     secondsValue.textContent = addLeadingZero(seconds);
 
-    if (deltaDate < 0) {
+    if (deltaDate <= 0) {
       clearInterval(intervalID);
+      daysValue.textContent = '00';
+      hoursValue.textContent = '00';
+      minutesValue.textContent = '00';
+      secondsValue.textContent = '00';
     }
   }, 1000);
 }
