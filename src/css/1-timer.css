@@ -1,6 +1,6 @@
 @import url('./reset.css');
 
-input,
+input[type='text'],
 input:disabled:hover {
   width: 280px;
   height: 40px;
@@ -15,19 +15,19 @@ input:disabled:hover {
   margin-bottom: 32px;
 }
 
-input:hover {
+input[type='text']:hover {
   border: 1px solid #000;
 }
 
-input:active {
+input[type='text']:active {
   border: 1px solid #4e75ff;
 }
 
-input:disabled:hover {
+input[type='text']:disabled:hover {
   cursor: not-allowed;
 }
 
-button {
+button[type='button'] {
   border-radius: 8px;
   border: none;
   padding: 8px 16px;
@@ -41,11 +41,11 @@ button {
   background: #4e75ff;
 }
 
-button:hover {
+button[type='button']:hover {
   background: #6c8cff;
 }
 
-button:disabled {
+button[type='button']:disabled {
   background: #cfcfcf;
   color: #989898;
   cursor: not-allowed;
