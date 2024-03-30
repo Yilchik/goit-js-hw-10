@@ -43,6 +43,7 @@ button[type='submit'] {
   border: none;
   color: #fff;
 }
+
 button[type='submit']:hover {
   background: #6c8cff;
 }
